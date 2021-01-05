@@ -90,5 +90,15 @@ class Room(core_models.TimeStampedModel):
     facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
     house_rules = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
 
-    def __str__(self):  # <- 파이썬에서모든 클래스는 str 클래스로 인식하기때문에  __str__ 메소드를 오버라이딩 할수있다
+    def __str__(self):
         return self.name
+
+    def total_rating(self):  # <- 파이썬에서모든 클래스는 str 클래스로 인식하기때문에  __str__ 메소드를 오버라이딩 할수있다
+        all_reviews = self.reviews.all()
+        all_ratings = 0
+        for review in all_reviews:
+            all_ratings += review.rating_average()
+        if len(all_reviews) == 0:
+            return all_ratings / 1
+        else:
+            return all_ratings / len(all_reviews)
