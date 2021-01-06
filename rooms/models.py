@@ -56,7 +56,7 @@ class Photo(core_models.TimeStampedModel):
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="room_photos")
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
@@ -92,6 +92,10 @@ class Room(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        super().save()
 
     def total_rating(self):  # <- 파이썬에서모든 클래스는 str 클래스로 인식하기때문에  __str__ 메소드를 오버라이딩 할수있다
         all_reviews = self.reviews.all()

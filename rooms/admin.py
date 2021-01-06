@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import mark_safe
 from . import models
 
 
@@ -15,14 +16,20 @@ class ItemAdmin(admin.ModelAdmin):
     pass
 
 
+class PhotoInline(admin.TabularInline):
+    # TabularInline 은 한줄에 여러개(caption, file, delete), StackedInline 은 한개당 한줄(cpation 한줄, file 한줄, delete 한줄)
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     """ Room Admin Definition """
 
+    inlines = (PhotoInline,)
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price")},
+            {"fields": ("name", "description", "country", "city", "address", "price")},
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
@@ -62,12 +69,17 @@ class RoomAdmin(admin.ModelAdmin):
         "city",
         "country",
     )
+    raw_id_fields = ("host",)
     search_fields = (
         "=city",
         "^host__username",
     )  # xaaa : x가 ^ <- aaa로 시작 , = <- aaa와 완전히일치(대소문자 구별x), @ <- aaa , none(아무것도 없음) <- icontatins(포함)
     filter_horizontal = ("amenities", "facilities", "house_rules")
     # fields = "country" : admin에서  country만 표시
+    # def save_model(self, request, obj, form, change):               <- model의 save와 달리 이건 admin에서만 작동
+
+    #     super().save_model(self, request, obj, form, change)
+
     def count_amenities(self, obj):
         return obj.amenities.count()
 
@@ -77,6 +89,12 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    """ """
 
-    pass
+    """ Phot Admin Definition """
+
+    list_display = ("__str__", "get_thumbnail")
+
+    def get_thumbnail(self, obj):
+        return mark_safe(f'<img width="50px" src="{obj.file.url}" />')
+
+    get_thumbnail.short_description = "Thumbnail"
