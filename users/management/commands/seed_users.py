@@ -15,6 +15,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         number = options.get("number")
         seeder = Seed.seeder()
-        seeder.add_entity(User, number, {"is_staff": False, "is_superuser": False})
+        seeder.add_entity(
+            User,
+            number,
+            {
+                "is_staff": False,
+                "is_superuser": False,
+                "fake_users": True,
+            },
+        )
         seeder.execute()
         self.stdout.write(self.style.SUCCESS(f"{number} users created!"))

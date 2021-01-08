@@ -89,6 +89,7 @@ class Room(core_models.TimeStampedModel):
     amenities = models.ManyToManyField("Amenity", related_name="rooms", blank=True)
     facilities = models.ManyToManyField("Facility", related_name="rooms", blank=True)
     house_rules = models.ManyToManyField("HouseRule", related_name="rooms", blank=True)
+    fake_rooms = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -105,4 +106,4 @@ class Room(core_models.TimeStampedModel):
         if len(all_reviews) == 0:
             return all_ratings / 1
         else:
-            return all_ratings / len(all_reviews)
+            return round(all_ratings / len(all_reviews), 2)

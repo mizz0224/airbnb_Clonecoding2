@@ -57,6 +57,7 @@ class RoomAdmin(admin.ModelAdmin):
         "count_amenities",
         "count_photos",
         "total_rating",
+        "fake_rooms",
     )
 
     list_filter = (
@@ -68,6 +69,7 @@ class RoomAdmin(admin.ModelAdmin):
         "house_rules",
         "city",
         "country",
+        "fake_rooms",
     )
     raw_id_fields = ("host",)
     search_fields = (
@@ -85,6 +87,8 @@ class RoomAdmin(admin.ModelAdmin):
 
     def count_photos(self, obj):
         return obj.photos.count()
+
+    count_photos.short_description = "Photo Count"
 
 
 @admin.register(models.Photo)
