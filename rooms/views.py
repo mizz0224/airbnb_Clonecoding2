@@ -13,8 +13,10 @@
 #     except EmptyPage:
 #         return redirect("/")
 from django.views.generic import ListView, DetailView
+from django.shortcuts import render
+from django_countries import countries
 
-from django.urls import reverse
+# from django.urls import reverse
 from . import models
 
 
@@ -42,4 +44,19 @@ class HomeView(ListView):
 
 
 class RoomDetail(DetailView):
+    """ RoomDeail Definition """
+
     model = models.Room
+    # urls.py  int:pk  pk -> potato ,  RoomDetail class pk_url_kwarg = "potato"
+    # https://ccbv.co.uk/projects/Django/2.2/
+
+
+def search(request):
+    city = request.GET.get("city", "")
+    city = str.capitalize(city)
+    room_types = models.RoomType.objects.all()
+    return render(
+        request,
+        "rooms/search.html",
+        {"city": city, "countries": countries, "room_types": room_types},
+    )
