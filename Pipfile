@@ -1,15 +1,18 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==2.2.5"
+django-countries = "*"
+pillow = "*"
+django-seed = "*"
+black = "*"
 
 [dev-packages]
 black = "*"
-
-[packages]
-djnago = "==2.2.5"
-pillow = "*"
-django-countries = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.7"
