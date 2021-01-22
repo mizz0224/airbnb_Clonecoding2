@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\wosud\\.virtualenvs\\airbnb-clonecoding-main-GbHMFRep\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\Users\\wosud\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": false,
     "python.globalModuleInstallation": true,
