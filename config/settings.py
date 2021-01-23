@@ -136,8 +136,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 MEDIA_URL = "/media/"
 
 # Email Configuration
-
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = "587"
 EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
+EMAIL_FROM = "airbnbclone@sandbox6357f4f2b8034e1e9307e83fb7a7f3ee.mailgun.org"  # @ 앞은 상관없으나 뒤에 도메인을 일치시켜줄 것

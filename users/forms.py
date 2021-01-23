@@ -23,11 +23,7 @@ class LoginForm(forms.Form):
 class SignUpForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = (
-            "first_name",
-            "last_name",
-            "email",
-        )
+        fields = ("first_name", "last_name", "email")
 
     password = forms.CharField(widget=forms.PasswordInput)
     password1 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
@@ -41,7 +37,7 @@ class SignUpForm(forms.ModelForm):
             return password
 
     def save(self, *args, **kwargs):
-        user = super().save(commit=False)  # object는 만들지만 commit(데이터베이스에 올리는것)은 하지않는다
+        user = super().save(commit=False)
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
         user.username = email
