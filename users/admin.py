@@ -5,7 +5,7 @@ from . import models
 
 @admin.register(
     models.User
-)  # CustomUserAdmin Å¬·¡½ºÀÇ ¾Æ·¡ºÎºÐ¿¡ admin.site.register(models.User,CustomUserAdmin) À» ÀÛ¼ºÇÑ°Í°ú °°Àº±â´ÉÀ»ÇÔ
+)  # CustomUserAdmin Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ÎºÐ¿ï¿½ admin.site.register(models.User,CustomUserAdmin) ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½Ñ°Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 class CustomUserAdmin(UserAdmin):
 
     """ Custom User Admin """
@@ -22,6 +22,7 @@ class CustomUserAdmin(UserAdmin):
                     "language",
                     "currency",
                     "superhost",
+                    "login_method",
                 )
             },
         ),
@@ -39,6 +40,9 @@ class CustomUserAdmin(UserAdmin):
         "is_staff",
         "is_superuser",
         "fake_users",
+        "email_verified",
+        "email_secrete",
+        "login_method",
     )
     # list_display = ("username", "email", "gender", "language", "currency", "superhost")
     # list_filter = ("language", "currency", "superhost")
