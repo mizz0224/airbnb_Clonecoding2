@@ -39,9 +39,8 @@ class CustomUserAdmin(UserAdmin):
         "superhost",
         "is_staff",
         "is_superuser",
-        "fake_users",
         "email_verified",
-        "email_secrete",
+        "email_secret",
         "login_method",
     )
     # list_display = ("username", "email", "gender", "language", "currency", "superhost")
