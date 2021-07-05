@@ -74,7 +74,7 @@ class Room(core_models.TimeStampedModel):
     city = models.CharField(max_length=80)
     price = models.IntegerField()
     address = models.CharField(max_length=140)
-    guests = models.IntegerField(help_text ="How many people will be staying")
+    guests = models.IntegerField(help_text="How many people will be staying")
     beds = models.IntegerField()
     bedrooms = models.IntegerField()
     baths = models.IntegerField()
@@ -111,3 +111,7 @@ class Room(core_models.TimeStampedModel):
             return all_ratings / 1
         else:
             return round(all_ratings / len(all_reviews), 2)
+
+    def first_photo(self):
+        (photo,) = self.photos.all()[:1]
+        return photo.file.url
