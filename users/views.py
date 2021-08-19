@@ -9,6 +9,7 @@ from django.core.files.base import ContentFile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from . import forms, models
+from django.views.generic import DetailView
 
 # Create your views here.
 
@@ -29,6 +30,10 @@ class LoginView(FormView):
 
 
 def log_out(request):
+    if request.user.first_name is not None:
+        messages.info(request, f"See you later{request.user.first_name}")
+    else:
+        messages.info(request, "See you later")
     logout(request)
     return redirect(reverse("core:home"))
 
@@ -196,3 +201,8 @@ def kakao_callback(request):
     except KakaoException as e:
         messages.error(request, e)
         return redirect(reverse("users:login"))
+
+
+class UserProfileView(DetailView):
+    model = models.User
+    context_object_name = "user_obj"
