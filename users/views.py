@@ -1,7 +1,7 @@
 import os
 import requests
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
@@ -211,3 +211,21 @@ class UserProfileView(DetailView):
         context = super().get_context_data(**kwargs)
         context["hello"] = "Hello"
         return context
+
+
+class UpdateProfileView(UpdateView):
+    model = models.User
+    template_name = "users/update-profile.html"
+    fields = (
+        "first_name",
+        "last_name",
+        "avatar",
+        "gender",
+        "bio",
+        "birthdate",
+        "language",
+        "currency",
+    )
+
+    def get_object(self, queryset=None):
+        return self.request.user
