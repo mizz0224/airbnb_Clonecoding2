@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from . import forms, models
 from django.views.generic import DetailView
+from django.contrib.auth.views import PasswordChangeView
 
 # Create your views here.
 
@@ -219,7 +220,6 @@ class UpdateProfileView(UpdateView):
     fields = (
         "first_name",
         "last_name",
-        "avatar",
         "gender",
         "bio",
         "birthdate",
@@ -229,3 +229,7 @@ class UpdateProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UpadatePasswordView(PasswordChangeView):
+    template_name = "users/update-password.html"
