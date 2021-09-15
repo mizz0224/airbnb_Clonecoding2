@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from . import forms, models, mixins
 from django.views.generic import DetailView
-
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 
 # Create your views here.
@@ -269,3 +269,16 @@ class UpadatePasswordView(
 
     def get_success_url(self):
         return self.request.user.get_absolute_url()
+
+
+@login_required
+def start_hosting(request):
+    request.session["is_hosting"] = True
+    return redirect(reverse("core:home"))
+
+
+def stop_hosting(request):
+    try:
+        del request.session["is_hosting"]
+    except KeyError:
+        pass

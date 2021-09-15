@@ -16,5 +16,7 @@ urlpatterns = [
     ),
     path("update-profile/", views.UpdateProfileView.as_view(), name="update"),
     path("update-password/", views.UpadatePasswordView.as_view(), name="password"),
-    path("<int:pk>/edit", views.UserProfileView.as_view(), name="profile"),
+    path("<int:pk>/edit/", views.UserProfileView.as_view(), name="profile"),
+    path("start-hosting/", views.start_hosting, name=""),
+    path("stop-hosting/", views.stop_hosting, name=""),
 ]
