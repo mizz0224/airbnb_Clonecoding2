@@ -272,13 +272,9 @@ class UpadatePasswordView(
 
 
 @login_required
-def start_hosting(request):
-    request.session["is_hosting"] = True
-    return redirect(reverse("core:home"))
-
-
-def stop_hosting(request):
+def switch_hosting(request):
     try:
         del request.session["is_hosting"]
     except KeyError:
-        pass
+        request.session["is_hosting"] = True
+    return redirect(reverse("core:home"))
