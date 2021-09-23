@@ -10,7 +10,7 @@ from django.shortcuts import reverse
 
 class User(AbstractUser):
 
-    """ Custom User Model """
+    """Custom User Model"""
 
     GENDER_MALE = "male"
     GENDER_FEMALE = "female"
