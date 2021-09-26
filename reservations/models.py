@@ -3,9 +3,20 @@ from core import models as core_models
 from django.utils.dateparse import parse_date
 from django.utils import timezone
 
+
+class BookedDay(core_models.TimeStampedModel):
+
+    day = models.DateField()
+    reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Booked Day"
+        verbose_name_plural = "Booked Days"
+
+
 # Create your models here.
 class Reservation(core_models.TimeStampedModel):
-    """ Reservation Model Definition """
+    """Reservation Model Definition"""
 
     STATUS_PENDING = "pending"
     STATUS_CONFIRMED = "confirmed"
@@ -43,3 +54,14 @@ class Reservation(core_models.TimeStampedModel):
         return now > self.check_out
 
     is_finished.boolean = True
+
+    def save(self, *args, **kwargs):
+        if True:
+            start = self.check_in
+            end = self.check_out
+            difference = end - start
+            existing_booked_day = BookedDay.objects.filter(
+                day__range=(start, end)
+            ).exists()
+
+        return super().save(*args, **kwargs)
