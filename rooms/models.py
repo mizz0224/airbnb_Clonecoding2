@@ -100,20 +100,19 @@ class Room(core_models.TimeStampedModel):
 
     def save(self, *args, **kwargs):
         self.city = str.capitalize(self.city)
-        super().save()
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("rooms:detail", kwargs={"pk": self.pk})
 
-    def total_rating(self):  # <- 파이썬에서모든 클래스는 str 클래스로 인식하기때문에  __str__ 메소드를 오버라이딩 할수있다
+    def total_rating(self):
         all_reviews = self.reviews.all()
         all_ratings = 0
-        for review in all_reviews:
-            all_ratings += review.rating_average()
-        if len(all_reviews) == 0:
-            return all_ratings / 1
-        else:
+        if len(all_reviews) > 0:
+            for review in all_reviews:
+                all_ratings += review.rating_average()
             return round(all_ratings / len(all_reviews), 2)
+        return 0
 
     def first_photo(self):
         try:
@@ -127,17 +126,12 @@ class Room(core_models.TimeStampedModel):
         return photos
 
     def get_calendars(self):
-        now = datetime.now()
-        # this_year = now.year
-        # this_month = now.month
-        this_year = 2020
-        this_month = 12
+        now = timezone.now()
+        this_year = now.year
+        this_month = now.month
+        next_month = this_month + 1
         if this_month == 12:
             next_month = 1
-            next_year = this_year + 1
-        else:
-            next_month = this_month + 1
-            next_year = this_year
         this_month_cal = Calendar(this_year, this_month)
-        next_month_cal = Calendar(next_year, next_month)
+        next_month_cal = Calendar(this_year, next_month)
         return [this_month_cal, next_month_cal]
