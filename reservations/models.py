@@ -8,8 +8,6 @@ class BookedDay(core_models.TimeStampedModel):
 
     day = models.DateField()
     reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE)
-    created = models.DateTimeField(default="")
-    updated = models.DateTimeField(default="")
 
     class Meta:
         verbose_name = "Booked Day"
